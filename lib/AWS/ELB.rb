@@ -51,7 +51,9 @@ module AWS
         # we need to strip out the '.' in the error 'Code' and we name the error exceptions with this
         # non '.' name as well.
         error_code    = doc.root.elements['//ErrorResponse/Error/Code'].text.gsub('.', '')
-        error_message = doc.root.elements['//ErrorResponse/Error/Message'].text
+        if doc.root.elements['//ErrorResponse/Error/Message']
+          error_message = doc.root.elements['//ErrorResponse/Error/Message'].text
+        end
 
         # Raise one of our specific error classes if it exists.
         # otherwise, throw a generic EC2 Error with a few details.
